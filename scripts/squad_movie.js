@@ -4,11 +4,14 @@ var _ = require('lodash');
 var MOVIES_JSON = __dirname + '/../data/squad_movies.json';
 
 var queryTemplate = _.template('http://www.imdb.com/xml/find?json=1&nr=1&tt=on&q=<%= title %>');
+var outputTemplate = _.template('<%= title %> - http://imdb.com/title/<%= id %>');
+
 var movies = JSON.parse(fs.readFileSync(MOVIES_JSON, 'utf8'));
 var movieRegex = /squad movie/i;
 
 function _onMovieSuccess(bot, res, err, httpRes, body) {
-  var movieData;
+  var movieData, imdbKey;
+  var keysToCheck = ['title_exact', 'title_popular', 'title_substring'];
 
   if(err) {
     return res.send('Could not query movie: ' + err.message);
@@ -18,11 +21,14 @@ function _onMovieSuccess(bot, res, err, httpRes, body) {
   } catch(ex) {
     return res.send('Could not parse JSON: ' + err.message);
   }
-  if(movieData.title_popular && _.isArray(movieData.title_popular)) {
-    movieData = movieData.title_popular[0];
-    return res.send("Random Squad Movie: <a href=\"http://www.imdb.com/title/" + movieData.id + "\">" + movieData.title  + "</a>");
+  imdbKey = _.find(keysToCheck, function(key) {
+    return movieData[key] && _.isArray(movieData[key]);
+  });
+  if(_.isUndefined(imdbKey)) {
+    return res.send('Could not find match for movie');
   }
-  res.send('done');
+  movieData = movieData[imdbKey][0];
+  return res.send(outputTemplate(movieData));
 }
 
 module.exports = function squadMovie(bot) {

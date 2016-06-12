@@ -1,13 +1,13 @@
 {
   "name": "jeeves-slackbot",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "author": "Christopher 'Chief' Najewicz <chief@beefdisciple.com>",
   "description": "Ask Jeeves!",
   "dependencies": {
     "hubot": "^2.18.0",
+    "hubot-date-reminder": "^1.0.2",
     "hubot-diagnostics": "0.0.1",
-    "hubot-drumpf": "^1.0.2",
     "hubot-help": "^0.1.3",
     "hubot-maps": "0.0.2",
     "hubot-plusplus": "^1.2.3",

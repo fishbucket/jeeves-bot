@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:6.4
+FROM mhart/alpine-node:6.10
 
 MAINTAINER chief@beefdisciple.com
 

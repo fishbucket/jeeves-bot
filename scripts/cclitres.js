@@ -17,9 +17,18 @@ function getRandomCook() {
 }
 
 function findCook(name) {
-  return _.find(cooksImages, function(imageName) {
-    return imageName.search(name) >= 0;
+  var splitName = name.split(" ");
+  var foundName;
+
+  _.forEach(splitName, function(namePart) {
+    foundName = _.find(cooksImages, function(imageName) {
+      return imageName.search(namePart) >= 0;
+    });
+    if(!_.isUndefined(foundName)) {
+      return false;
+    }
   });
+  return foundName;
 }
 
 module.exports = function squadMovie(bot) {

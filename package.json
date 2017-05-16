@@ -19,6 +19,9 @@
     "lodash": "^4.7.0"
   },
   "engines": {
-    "node": "6.1.x"
+    "node": "6.10.x"
+  },
+  "devDependencies": {
+    "hubot-test-helper": "^1.5.1"
   }
 }
